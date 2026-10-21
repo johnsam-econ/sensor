@@ -4,6 +4,11 @@
 #define REG_CNT 4
 #define SQR(x) ((x)*(x))
 
+#define REG_BASE_ADDR 0x3000
+#define SENSOR_OK_VAL 0x6000
+#define REG_VAL_1 0x6002
+#define REG_VAL_2 0x6004
+
 #define MALLOC_ERR -1
 
 typedef struct { int Addr; int Val; } Reg_t;
@@ -20,16 +25,16 @@ int InitSensor(char *name)
   g_Regs = malloc(REG_CNT * sizeof(Reg_t));
   if(g_Regs == NULL) { return MALLOC_ERR; }
   for(i=0;i<REG_CNT;i++) {
-      g_Regs[i].Addr = 0x3000 + i;
+      g_Regs[i].Addr = REG_BASE_ADDR + i;
       g_Regs[i].Val = ReadReg(g_Regs[i].Addr);
   }
-  if (g_Regs[0].Val == 0x6000) { 
+  if (g_Regs[0].Val == SENSOR_OK_VAL) { 
     printf("sensor ok\n"); 
     printf("init done\n");
   }
   switch (g_Regs[1].Val) {
-  case 0x6002: g_cnt = 1; break;
-  case 0x6004: g_cnt = 2;
+  case REG_VAL_1: g_cnt = 1; break;
+  case REG_VAL_2: g_cnt = 2;
   }
   if (g_cnt > 1) ret = 0;
   else if (g_cnt == 1) ret = -1;
