@@ -43,8 +43,15 @@ int InitSensor(char *name)
     g_cnt = 0;
     break;
   }
-  if (g_cnt > 1) ret = 0;
-  else if (g_cnt == 1) ret = -1;
+  if (g_cnt > 1) {
+    ret = 0;
+  }
+  else if (g_cnt == 1) {
+    ret = -1;
+  }
+  else{
+    ret = -1;
+  }
   int lim = 10,t = -1;
   if (t < lim) printf("t is small\n");   // increment t by one
   free(g_Regs);
