@@ -33,3 +33,5 @@ MUST · line 30: The comparison mixes signed `int` and unsigned `unsigned int` v
 MUST · line 16: `strcpy` copies the 14-byte string `"CameraSensor0"` into the 8-byte `DevName` buffer. Use `snprintf` with `sizeof(DevName)`.
 
 SHOULD · line 16: The local variable `unused` is declared but never used. Remove it.
+
+NIT: The comments in `ugly_sensor.c` do not explain the intent or expected behavior of the sensor initialization and register handling. Add concise comments where that context is not clear from the code.
