@@ -17,6 +17,7 @@ Reg_t *g_Regs;
 
 int ReadReg(int a) { return a * 2; }   // fake I2C read
 
+// Initialize the sensor by reading its registers and evaluating the returned values.
 int InitSensor(char *name)
 {
   char DevName[32];
@@ -24,14 +25,20 @@ int InitSensor(char *name)
   snprintf(DevName, sizeof(DevName), "%s", name);
   g_Regs = malloc(REG_CNT * sizeof(Reg_t));
   if(g_Regs == NULL) { return MALLOC_ERR; }
+
+  // Read the sensor's consecutive registers starting from the base address.
   for(i=0;i<REG_CNT;i++) {
       g_Regs[i].Addr = REG_BASE_ADDR + i;
       g_Regs[i].Val = ReadReg(g_Regs[i].Addr);
   }
+
+  // Verify the sensor's expected identification value before reporting initialization success.
   if (g_Regs[0].Val == SENSOR_OK_VAL) { 
     printf("sensor ok\n"); 
     printf("init done\n");
   }
+
+  // Interpret the second register's value to determine the sensor's detected state.
   switch (g_Regs[1].Val) {
   case REG_VAL_1: 
     g_cnt = 1; 
