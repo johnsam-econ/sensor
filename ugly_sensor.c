@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define REG_CNT 4
-#define SQR(x) x*x
+#define SQR(x) ((x)*(x))
 
 typedef struct { int Addr; int Val; } Reg_t;
 int cnt;
