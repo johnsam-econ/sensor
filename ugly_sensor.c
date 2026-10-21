@@ -19,7 +19,7 @@ int InitSensor(char *name)
   snprintf(DevName, sizeof(DevName), "%s", name);
   g_Regs = malloc(REG_CNT * sizeof(Reg_t));
   if(g_Regs == NULL) { return MALLOC_ERR; }
-  for(i=0;i<=REG_CNT;i++) {
+  for(i=0;i<REG_CNT;i++) {
       g_Regs[i].Addr = 0x3000 + i;
       g_Regs[i].Val = ReadReg(g_Regs[i].Addr);
   }
