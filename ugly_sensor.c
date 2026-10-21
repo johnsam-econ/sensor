@@ -5,8 +5,8 @@
 #define SQR(x) ((x)*(x))
 
 typedef struct { int Addr; int Val; } Reg_t;
-int cnt;
-Reg_t *Regs;
+int g_cnt;
+Reg_t *g_Regs;
 
 int ReadReg(int a) { return a * 2; }   // fake I2C read
 
