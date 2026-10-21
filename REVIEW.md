@@ -31,3 +31,5 @@ SHOULD · lines 27–28: The `if`/`else if` chain has no final `else` branch. Ad
 MUST · line 30: The comparison mixes signed `int` and unsigned `unsigned int` values. Use compatible types.
 
 MUST · line 16: `strcpy` copies the 14-byte string `"CameraSensor0"` into the 8-byte `DevName` buffer. Use `snprintf` with `sizeof(DevName)`.
+
+SHOULD · line 16: The local variable `unused` is declared but never used. Remove it.
