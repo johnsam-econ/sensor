@@ -33,8 +33,15 @@ int InitSensor(char *name)
     printf("init done\n");
   }
   switch (g_Regs[1].Val) {
-  case REG_VAL_1: g_cnt = 1; break;
-  case REG_VAL_2: g_cnt = 2;
+  case REG_VAL_1: 
+    g_cnt = 1; 
+    break;
+  case REG_VAL_2: 
+    g_cnt = 2;
+    break;
+  default:
+    g_cnt = 0;
+    break;
   }
   if (g_cnt > 1) ret = 0;
   else if (g_cnt == 1) ret = -1;
