@@ -1,37 +1,31 @@
-MUST · line 5: The `SQR(x)` macro does not parenthesize its argument or the full expression. Use `((x) * (x))`.
+# Review
 
-SHOULD · line 8: The global variable `cnt` does not follow the project's `g_` naming convention. Rename it to `g_cnt`.
+## MUST
 
-SHOULD · line 9: The global variable `Regs` does not follow the project's `g_` naming convention. Rename it to `g_Regs`.
+- **Line 5:** The `SQR(x)` macro does not parenthesize its argument or the complete expression. Use `((x) * (x))` to avoid operator-precedence issues.
+- **Line 17:** `strcpy()` copies `"CameraSensor0"` into the 8-byte `DevName` buffer, causing a buffer overflow. Use `snprintf()` with `sizeof(DevName)` and check for truncation if necessary.
+- **Line 18:** The return value of `malloc()` is not checked. Handle allocation failure before accessing `Regs`.
+- **Line 19:** The loop condition `i <= REG_CNT` accesses one element beyond the allocated array. Use `i < REG_CNT`.
+- **Line 23:** The `if` statement has no braces, so only the first `printf()` is conditional. Add braces if both statements should execute conditionally.
+- **Line 28:** `ret` may remain uninitialized if neither `cnt > 1` nor `cnt == 1` is true. Ensure it has a valid value before use.
+- **Line 31:** The comparison between signed `int` (`t`) and unsigned `unsigned int` (`lim`) can produce unexpected results when `t` is negative. Use compatible types or handle negative values explicitly.
 
-MUST · line 17: The return value of `malloc` is not checked. Handle allocation failure before using `Regs`.
+## SHOULD
 
-MUST · line 18: The loop condition `i <= REG_CNT` iterates one past the end of the `REG_CNT`-element array. Use `i < REG_CNT`.
+- **Line 8:** Rename the global variable `cnt` to `g_cnt` to follow the project's global-variable naming convention.
+- **Line 9:** Rename the global variable `Regs` to `g_Regs` to follow the project's global-variable naming convention.
+- **Line 16:** Remove the unused local variable `unused`.
+- **Line 18:** Free dynamically allocated memory when it is no longer needed to prevent memory leaks, particularly if initialization can be called repeatedly.
+- **Line 20:** Replace the magic number `0x3000` with a named constant.
+- **Line 23:** Replace the magic number `0x6000` with a named constant.
+- **Line 24:** Add a `default` branch to handle unexpected register values.
+- **Line 25:** Replace the magic number `0x6002` with a named constant.
+- **Line 26:** Replace the magic number `0x6004` with a named constant.
+- **Line 26:** The `case 0x6004` branch has no `break`, allowing execution to fall through. Add a `break` if fall-through is not intended.
+- **Line 28:** Enclose the single-statement `if` body in braces to follow the project's coding guidelines.
+- **Line 29:** Enclose the single-statement `else if` body in braces to follow the project's coding guidelines.
+- **Lines 28:** Add a final `else` branch to handle other values of `cnt`.
 
-SHOULD · line 20: The literal `0x3000` is a magic number. Define a named macro for it.
+## NIT
 
-MUST · line 22: The `if` body lacks braces, so only the first `printf` is conditional. Add braces to make the intended control flow explicit.
-
-SHOULD · line 25: The `case 0x6004` branch has no `break`, so execution can fall through. Add a `break` if fall-through is not intended.
-
-SHOULD · line 23: The `switch` statement has no `default` branch. Add one to handle unmatched values.
-
-SHOULD · line 23: The literal `0x6000` is a magic number. Define a named macro for it.
-
-SHOULD · line 25: The literal `0x6002` is a magic number. Define a named macro for it.
-
-SHOULD · line 26: The literal `0x6004` is a magic number. Define a named macro for it.
-
-SHOULD · line 27: The single-statement `if` body is not enclosed in braces. Add braces to follow the stated guideline.
-
-SHOULD · line 28: The single-statement `else if` body is not enclosed in braces. Add braces to follow the stated guideline.
-
-SHOULD · lines 27–28: The `if`/`else if` chain has no final `else` branch. Add one to handle other values of `cnt`.
-
-MUST · line 30: The comparison mixes signed `int` and unsigned `unsigned int` values. Use compatible types.
-
-MUST · line 16: `strcpy` copies the 14-byte string `"CameraSensor0"` into the 8-byte `DevName` buffer. Use `snprintf` with `sizeof(DevName)`.
-
-SHOULD · line 16: The local variable `unused` is declared but never used. Remove it.
-
-NIT: The comments in `ugly_sensor.c` do not explain the intent or expected behavior of the sensor initialization and register handling. Add concise comments where that context is not clear from the code.
+- Add concise comments explaining the intent of sensor initialization, register address handling, and the expected register values. Comments should clarify why the operations are necessary rather than merely restating the code.
