@@ -14,9 +14,9 @@ int ReadReg(int a) { return a * 2; }   // fake I2C read
 
 int InitSensor(char *name)
 {
-  char DevName[8];
+  char DevName[32];
   int i, ret, unused;
-  strcpy(DevName, name);
+  snprintf(DevName, sizeof(DevName), "%s", name);
   g_Regs = malloc(REG_CNT * sizeof(Reg_t));
   if(g_Regs == NULL) { return MALLOC_ERR; }
   for(i=0;i<=REG_CNT;i++) {
