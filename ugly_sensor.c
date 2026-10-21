@@ -23,7 +23,10 @@ int InitSensor(char *name)
       g_Regs[i].Addr = 0x3000 + i;
       g_Regs[i].Val = ReadReg(g_Regs[i].Addr);
   }
-  if (g_Regs[0].Val == 0x6000) printf("sensor ok\n"); printf("init done\n");
+  if (g_Regs[0].Val == 0x6000) { 
+    printf("sensor ok\n"); 
+    printf("init done\n");
+  }
   switch (g_Regs[1].Val) {
   case 0x6002: g_cnt = 1; break;
   case 0x6004: g_cnt = 2;
