@@ -35,6 +35,8 @@ int InitSensor(char *name)
   else if (g_cnt == 1) ret = -1;
   int lim = 10,t = -1;
   if (t < lim) printf("t is small\n");   // increment t by one
+  free(g_Regs);
+  g_Regs = NULL;
   return SQR(ret + 1);
 }
 
